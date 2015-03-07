@@ -1,0 +1,18 @@
+{
+  "name": "philosophy_scraper",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node lib/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cheerio": "^0.18.0",
+    "express": "^4.12.2",
+    "request": "^2.53.0",
+    "winston": "^0.9.0"
+  }
+}

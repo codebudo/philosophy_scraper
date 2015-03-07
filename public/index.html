@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <script src="js/jquery-1.9.1.min.js" type="text/javascript"></script>
+    <script src="js/jquery.jqote2.min.js" type="text/javascript"></script>
+    <script src="bootstrap/js/bootstrap.min.js"></script>
+    <link  href="bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>Philosophy Finder</title>
+    <style type="text/css">
+      #pathContainer {
+        margin-top: 60px;
+      }
+      .navbar-inner {
+        width: 100%;
+        text-align: center;
+      }
+      #inputBar {
+        width: 40%;
+        max-width: 550px;
+        margin-top: 16px;
+        margin-left: 5px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- template -->
+    <script type="text/html" id="pathTemplate">
+      <ul id="pathList">
+        Hops: <%= this.list.length %>
+        <% for( var i=0; i < this.list.length; i++ ){ %>
+          <a href="<%= this.list[i] %>" target="_blank"><li><%= this.list[i] %></li></a>
+        <% } %>
+      </ul>
+    </script>
+
+    <!-- UI -->
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <input id="inputBar" type="text" value="http://en.wikipedia.org/wiki/Short" onBlur="defaultInput(this)" onFocus="clearInput(this)" />
+        <button value="Seek!" class='btn' onClick="fetchPath($('#inputBar')[0].value)">Seek!</button>
+      </div>
+    </div>
+    <div id="pathContainer" class="container-fluid">
+      <ul id="pathList">
+      </ul>
+    </div>
+
+    <script>
+
+      function clearInput(el){
+        el.value = '';
+      }
+      function defaultInput(el){
+        var INPUT_TEXT = 'Enter Wikipedia URL';
+        var INPUT_TEXT = 'http://en.wikipedia.org/wiki/Short';
+        if( el.value.length === 0 ){
+          el.value = INPUT_TEXT;
+        }
+      }
+
+      function renderList(list){
+        $('#pathList').replaceWith( $('#pathTemplate').jqote({list:list}));
+      }
+      
+      function fetchPath(url){
+        var API_ENDPOINT = '/philosophy/';
+        jQuery.ajax(
+          API_ENDPOINT+url, { 
+            complete: function(data, textStatus, jqXHR){
+              var cacheControl;
+
+              try {
+                var res = JSON.parse( data.responseText );
+              } catch( err ){
+                console.log( err );
+              }
+
+              if( typeof res !== 'undefined'){
+                if( res.error ){
+                  // TODO display error
+                } else {
+                  console.log( res );
+                  renderList( res ) 
+                }
+              }
+            },
+            error: function(data, textStatus, jqXHR){
+              // TODO display error
+              var statusMessage = textStatus;
+            }
+          }
+        );
+      }
+    </script>
+  </body>
+</html>
