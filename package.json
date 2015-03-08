@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "node lib/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node_modules/.bin/mocha",
+    "coverage": "node_modules/.bin/mocha -R html-cov > coverage.html"
   },
   "author": "",
   "license": "ISC",
@@ -14,5 +15,11 @@
     "express": "^4.12.2",
     "request": "^2.53.0",
     "winston": "^0.9.0"
+  },
+  "devDependencies": {
+    "blanket": "^1.1.6",
+    "mocha": "^2.0.1",
+    "should": "^5.1.0",
+    "supertest": "^0.15.0"
   }
 }
