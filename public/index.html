@@ -38,7 +38,7 @@
     <!-- UI -->
     <div class="navbar navbar-inverse navbar-fixed-top">
       <div class="navbar-inner">
-        <input id="inputBar" type="text" value="http://en.wikipedia.org/wiki/Short" onBlur="defaultInput(this)" onFocus="clearInput(this)" />
+        <input id="inputBar" type="text" value="Enter Wikipedia URL" onBlur="defaultInput(this)" onFocus="clearInput(this)" />
         <button value="Seek!" class='btn' onClick="fetchPath($('#inputBar')[0].value)">Seek!</button>
       </div>
     </div>
@@ -48,13 +48,14 @@
     </div>
 
     <script>
+      //var INPUT_TEXT = 'Enter Wikipedia URL';
+      var INPUT_TEXT = $('#inputBar')[0].value;
 
       function clearInput(el){
-        el.value = '';
+        if( el.value === INPUT_TEXT )
+          el.value = '';
       }
       function defaultInput(el){
-        var INPUT_TEXT = 'Enter Wikipedia URL';
-        var INPUT_TEXT = 'http://en.wikipedia.org/wiki/Short';
         if( el.value.length === 0 ){
           el.value = INPUT_TEXT;
         }
